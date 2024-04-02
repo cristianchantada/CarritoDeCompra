@@ -55,7 +55,6 @@
 <body>
 <% 
 	Catalogo catalogo = new Catalogo();
-	catalogo.cargarProductos();
 	
 	%>
 	<h1>Xogos Tradicionais:</h1>

@@ -49,4 +49,16 @@ public class Producto {
 		this.img = img;
 	}
 	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Producto producto = (Producto) obj;
+        return nombre == producto.nombre;
+    }
+	
 }

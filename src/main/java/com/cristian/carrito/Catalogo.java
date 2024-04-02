@@ -7,6 +7,10 @@ public class Catalogo {
 	
 	private List<Producto> productos = new ArrayList();
 	
+	public Catalogo() {
+		this.productos= cargarProductos(); 
+	}
+	
 	public List<Producto> cargarProductos(){
 		productos.clear();
 		productos.add(
@@ -47,9 +51,6 @@ public class Catalogo {
 				.filter(p -> p.getCodigo() == codigo);
 		
 		return producto;
-	
 	}
 	
-
-
 }
