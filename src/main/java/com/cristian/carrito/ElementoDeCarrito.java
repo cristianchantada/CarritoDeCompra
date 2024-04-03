@@ -1,14 +1,13 @@
 package com.cristian.carrito;
 
-public class ElementoEnCarrito {
+public class ElementoDeCarrito {
 	
 	private Producto producto;
 	private int cantidad;
 	
-	public ElementoEnCarrito() {}
+	public ElementoDeCarrito() {}
 
-	public ElementoEnCarrito(Producto producto, int cantidad) {
-		super();
+	public ElementoDeCarrito(Producto producto, int cantidad) {
 		this.producto = producto;
 		this.cantidad = cantidad;
 	}
@@ -31,6 +30,10 @@ public class ElementoEnCarrito {
 	
 	public void incrementaCantidad() {
 		cantidad++;
+	}
+	
+	public void decrementarCantidad() {
+		cantidad--;
 	}
 
 }

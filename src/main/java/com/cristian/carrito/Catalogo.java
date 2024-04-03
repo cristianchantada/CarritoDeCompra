@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Catalogo {
 	
-	private List<Producto> productos = new ArrayList();
+	private List<Producto> productos = new ArrayList<>();
 	
 	public Catalogo() {
 		this.productos= cargarProductos(); 
@@ -45,11 +45,10 @@ public class Catalogo {
 		return productos;
 	}
 	
-	public Producto getProducto(int codigo) {
+	public Producto productoConCodigo(int codigo) {
 		Producto producto = (Producto) productos
 				.stream()
 				.filter(p -> p.getCodigo() == codigo);
-		
 		return producto;
 	}
 	
