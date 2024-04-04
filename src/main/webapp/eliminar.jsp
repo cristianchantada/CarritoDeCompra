@@ -16,7 +16,7 @@
 	Carrito carrito = (Carrito) session.getAttribute("carrito");
 	carrito.eliminarproducto(codigo);
 	session.setAttribute("carrito", carrito);
-	response.sendRedirect("index.html");
+	response.sendRedirect("index.jsp");
 	
 %>
 

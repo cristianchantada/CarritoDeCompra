@@ -47,13 +47,13 @@ public class Carrito {
 		if(existeElementoEncarrito(codigo)){
 			for(ElementoDeCarrito e: elementosCarrito) {
 				if(e.getProducto().getCodigo() == codigo) {
-					e.setCantidad(e.getCantidad() + 1);
+					e.setCantidad(e.getCantidad() + 1);					
 				}
 			}
 		} else {
 			Catalogo catalogo = new Catalogo();
 			for(Producto p: catalogo.getProductos()) {
-				if(p.equals(codigo)) {
+				if(p.getCodigo() == codigo) {
 					elementosCarrito.add(new ElementoDeCarrito(p, 1));
 				}
 			}

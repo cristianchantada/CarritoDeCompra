@@ -1,66 +1,65 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.cristian.carrito.*" %>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="com.cristian.carrito.*"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Xogos Tradicionais galegos</title>
-<link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8">
+    <title>Xogos Tradicionais Galegos</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-<% 
-	Catalogo catalogo = new Catalogo();
-	Carrito carrito;
-
-	if(session.getAttribute("carrito") != null){
-		carrito = (Carrito) session.getAttribute("carrito");
-	} else {
-		carrito = new Carrito();
-		session.setAttribute("carrito", carrito);
-	}
-	
-	List<ElementoDeCarrito> elementosCarrito = carrito.getElementosCarrito();
-	
-	%>
-	<h1>Xogos Tradicionais:</h1>
-	
-	<div class="main-container">
-	<%
-		for(Producto producto: catalogo.getProductos()){
-	%>	
-		<div class="product-card">
-			<div class="img-container">
-				<img alt="" src=<%= "imgs/" + producto.getCodigo() + ".png"%>>
-			</div>
-			<div class="data-container">
-				<h4><%= producto.getNombre() %></h4>
-				<h5><%= producto.getPrecio()%> €</h5>
-				<a href="comprar.jsp?codigo=<%= producto.getCodigo() %>">Comprar</a>
-			</div>
-		</div>
-	<%}%>	
-		
-	</div>
-	<div class="cart-container">
-		<h3>Carrito de la compra:</h3>
-		<% for(ElementoDeCarrito e: elementosCarrito) {%>
-		<div class="product-card">
-			<div class="img-container">
-				<img alt="" src=<%= "imgs/" + e.getProducto().getCodigo() + ".png"%>>
-			</div>
-			<div class="data-container">
-				<h4><%= e.getProducto().getNombre() %></h4>
-				<h5><%= e.getProducto().getPrecio()%> €</h5>
-				<a href="eliminar.jsp?codigo=" + <%= e.getProducto().getCodigo() %>></a>
-			</div>
-		</div>
-			
-		
-		<%}%>
-	</div>
-	
+    <h1>Xogos Tradicionais Galegos</h1>
+    <div class="container">
+        <div class="products-container">
+            <% Catalogo catalogo = new Catalogo();
+               for (Producto producto : catalogo.getProductos()) { %>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="imgs/<%= producto.getCodigo() %>.png" alt="<%= producto.getNombre() %>">
+                    </div>
+                    <div class="product-details">
+                        <h4><%= producto.getNombre() %></h4>
+                        <p><%= producto.getPrecio() %>€</p>
+                        <a href="comprar.jsp?codigo=<%= producto.getCodigo() %>" class="btn">Comprar</a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <div class="cart-container">
+            <h3>Carrito de la compra</h3>
+            <% Carrito carrito;
+               if (session.getAttribute("carrito") != null) {
+                   carrito = (Carrito) session.getAttribute("carrito");
+               } else {
+                   carrito = new Carrito();
+                   session.setAttribute("carrito", carrito);
+               }
+               List<ElementoDeCarrito> elementosCarrito = carrito.getElementosCarrito();
+               double total = 0;
+               for (ElementoDeCarrito e : elementosCarrito) {
+                   total += e.getProducto().getPrecio() * e.getCantidad();
+            %>
+                <div class="cart-item">
+                    <div class="product-image">
+                        <img src="imgs/<%= e.getProducto().getCodigo() %>.png" alt="<%= e.getProducto().getNombre() %>">
+                    </div>
+                    <div class="cart-item-details">
+                        <h4><%= e.getProducto().getNombre() %></h4>
+                        <p>Precio: <%= e.getProducto().getPrecio() %>€</p>
+                        <p>Cantidad: <%= e.getCantidad() %></p>
+                        <p>Total: <%= e.getProducto().getPrecio() * e.getCantidad() %>€</p>
+                    	<a href="eliminar.jsp?codigo=<%=e.getProducto().getCodigo()%>">Eliminar
+						unidad</a>
+                    </div>
+                </div>
+            <% } %>
+            <div class="cart-total">
+                <h4>Total: <%= total %>€</h4>
+                <a href="checkout.jsp" class="checkout-btn">Pagar</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
