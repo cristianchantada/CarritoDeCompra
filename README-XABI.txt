@@ -1,0 +1,2 @@
+1.- Actualiza tus tablas clientes y productos con el fichero tablaConContraseña.sql adjuntado.
+2.- Imagenes de productos randomizadas para probar, fijarse en el nombre del producto, no en esta para corregir la interfaz de usuario.

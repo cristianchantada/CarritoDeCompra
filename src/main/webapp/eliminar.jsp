@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.cristian.carrito.*" %>
+<%@ page import="com.cristian.carrito.models.*" %>
 <!DOCTYPE html>
 <html>
 <head>

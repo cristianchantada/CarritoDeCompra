@@ -1,4 +1,4 @@
-package com.cristian.carrito;
+package com.cristian.carrito.models;
 
 public class ElementoDeCarrito {
 	
@@ -35,5 +35,7 @@ public class ElementoDeCarrito {
 	public void decrementarCantidad() {
 		cantidad--;
 	}
+
+
 
 }

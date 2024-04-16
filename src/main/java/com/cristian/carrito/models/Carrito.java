@@ -1,8 +1,11 @@
-package com.cristian.carrito;
+package com.cristian.carrito.models;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.cristian.carrito.controllers.ProductoDao;
 
 public class Carrito {
 	
@@ -25,8 +28,13 @@ public class Carrito {
 
 	public boolean existeElementoEncarrito(int codigo) {
 		boolean localizado = false;
+		System.out.println("Codigo: " + codigo );
 		for(ElementoDeCarrito e : elementosCarrito) {
+			System.out.println(".getCodigo: " + e.getProducto().getCodigo());
+			
 			if(e.getProducto().getCodigo() == codigo) {
+				System.out.println("El producto está REPETIDO");
+
 				localizado = true;
 			}
 		}
@@ -43,22 +51,20 @@ public class Carrito {
 		return -1;		
 	}
 	
-	public void meterProducto(int codigo) {
+	public void meterProducto(int codigo) throws SQLException {
 		if(existeElementoEncarrito(codigo)){
 			for(ElementoDeCarrito e: elementosCarrito) {
 				if(e.getProducto().getCodigo() == codigo) {
-					e.setCantidad(e.getCantidad() + 1);					
+					e.setCantidad(e.getCantidad() + 1);	
 				}
 			}
 		} else {
-			Catalogo catalogo = new Catalogo();
-			for(Producto p: catalogo.getProductos()) {
-				if(p.getCodigo() == codigo) {
-					elementosCarrito.add(new ElementoDeCarrito(p, 1));
-				}
-			}
-		}		
-	}
+			ProductoDao productoDao = new ProductoDao();
+			ElementoDeCarrito elementoCarrito = productoDao.getByid(codigo);
+			elementoCarrito.setCantidad(1);
+			elementosCarrito.add(elementoCarrito);}
+	}		
+	
 	
 	public void eliminarproducto(int codigo) {
 		Iterator<ElementoDeCarrito> iterator = elementosCarrito.iterator();

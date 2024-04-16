@@ -1,4 +1,4 @@
-package com.cristian.carrito;
+package com.cristian.carrito.models;
 
 public class Producto {
 	
@@ -6,16 +6,23 @@ public class Producto {
 	private String nombre;
 	private double precio;
 	private String img;
+	private boolean destacado;
 	
 	public Producto(){}
 	
+	
 	public Producto(int codigo, String nombre, double precio, String img) {
-		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.img = img;
 	}
+	
+	public Producto(int codigo, String nombre, double precio, String img, boolean destacado) {
+		this(codigo, nombre, precio, img );
+		this.destacado = destacado;
+	}
+
 
 	public int getCodigo() {
 		return codigo;
@@ -49,6 +56,18 @@ public class Producto {
 		this.img = img;
 	}
 	
+	
+	
+	public boolean isDestacado() {
+		return destacado;
+	}
+
+
+	public void setDestacado(boolean destacado) {
+		this.destacado = destacado;
+	}
+
+
 	@Override
     public boolean equals(Object obj) {
         if (this == obj) {
