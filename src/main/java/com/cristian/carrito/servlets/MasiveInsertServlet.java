@@ -44,12 +44,19 @@ public class MasiveInsertServlet extends HttpServlet {
 	                	System.out.println("Error al parsear a doble el precio en la Linea: " + linea);
 	                }
 	                
-	                String imagen = campos[2];	
+	                String imagen = campos[2];
 	                
 	                Producto newProducto = new Producto();
 	                newProducto.setNombre(nombre);
 	                newProducto.setPrecio(precio);
 	                newProducto.setImg(imagen);
+	                
+	                if(campos.length >= 4) {
+	                	boolean destacado = Boolean.parseBoolean(campos[3]);
+	                	newProducto.setDestacado(destacado);
+	                }
+	                
+	                
 	                listaProductos.add(newProducto);
 	            }
 	        } catch (Exception e) {

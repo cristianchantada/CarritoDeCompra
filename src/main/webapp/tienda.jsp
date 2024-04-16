@@ -17,16 +17,22 @@
 		<%
 		List<Producto> listaProductos = (List<Producto>) request.getAttribute("listaProductos");
 
+		System.out.println("productsPerPage tienda.jsp: " + request.getAttribute("productsPerPage"));
+		
 		int productsPerPage = (int) request.getAttribute("productsPerPage");
+		
+		
+		
 		int lastProductPage = (int) request.getAttribute("theLastProduct");
 		int firstProductPage = (int) request.getAttribute("theFirstProduct");
+		String orden = (String) request.getAttribute("orden");
 		boolean isTheLast = (boolean) request.getAttribute("isTheLast");
 
 		if (session.getAttribute("login") == null) {
 		%>
 		<nav>
 			<div>
-				<a href="/CarritoDeCompra/insert-all">Ir a insercción masiva de
+				<a class="massive-insertion" href="/CarritoDeCompra/insert-all">Ir a insercción masiva de
 					productos</a>
 			</div>
 			<form action="login.jsp" method="post">
@@ -44,44 +50,42 @@
 		</nav>
 		<form class="products-per-page-form"
 			action="/CarritoDeCompra/get-n-products" method="POST">
-			<div class="selects-container">
-				<div class="products-per-page-container">
-				<label for"ProductsPerPage">Productos por página</label>
-					<select name="ProductsPerPage">
-						<option value="10" <%=productsPerPage == 10 ? "selected" : ""%>>10</option>
-						<option value="25" <%=productsPerPage == 20 ? "selected" : ""%>>20</option>
-						<option value="50" <%=productsPerPage == 50 ? "selected" : ""%>>50</option>
-						<option value="100" <%=productsPerPage == 100 ? "selected" : ""%>>100</option>
-					</select>
-				</div>
-				<div class="order-by-container">
-					<a href="<%= request.getContextPath() %>/index?orden=ASC&productsPerPage=<%= productsPerPage%>">Ordenar precio ascendente</a>
-					<a href="<%= request.getContextPath() %>/index?orden=DESC&productsPerPage=<%= productsPerPage%>">Ordenar precio descendente</a>
-					<a href="<%= request.getContextPath() %>/index?orden=destacado&productsPerPage=<%= productsPerPage %>">Listar destacados</a>
-				</div>
-				<div>
-					<div class="prev-next-form">
-						<%
-						if (firstProductPage > 0) {
-						%>
-						<input type="submit" name="prev" value="<< Previous">
-						<%
-						}
-						if (!isTheLast) {
-						%>
-						<input type="submit" name="next" value="Next >>">
-						<%
-						}
-						%>
+			<div class="selects-a-input-form-container">
+				<div class="products-per-page-and-a-order">
+					<div class="per-page-container">
+						<label for="ProductsPerPage">Productos por página:</label>
+						<select name="ProductsPerPage">
+							<option value="10" <%=productsPerPage == 10 ? "selected" : ""%>>10</option>
+							<option value="25" <%=productsPerPage == 20 ? "selected" : ""%>>20</option>
+							<option value="50" <%=productsPerPage == 50 ? "selected" : ""%>>50</option>
+							<option value="100" <%=productsPerPage == 100 ? "selected" : ""%>>100</option>
+						</select>
+					</div>
+					<div class="order-by-container">
+						<p>ordenar:</p>
+						<a class="a-button" href="<%= request.getContextPath() %>/get-n-products?orden=ASC&productsPerPage=<%= productsPerPage%>">precio asc</a>
+						<a class="a-button" href="<%= request.getContextPath() %>/get-n-products?orden=DESC&productsPerPage=<%= productsPerPage%>">precio desc</a>
+						<a class="a-button" href="<%= request.getContextPath() %>/get-n-products?orden=destacado&productsPerPage=<%= productsPerPage %>">destacados</a>
 					</div>
 				</div>
+				<div class="prev-next-form">
+					<%
+					if (firstProductPage > 0) {
+					%>
+					<input type="submit" name="prev" value="<< Previous">
+					<%
+					}
+					if (!isTheLast) {
+					%>
+					<input type="submit" name="next" value="Next >>">
+					<%
+					}
+					%>
+					</div>
 			</div>
-			<input type="hidden" name="theLastProduct"
-				value="<%=lastProductPage%>"> <input type="hidden"
-				name="theFirstProduct" value="<%=firstProductPage%>">
-			<input type="hidden" name="orden"
-				value="<%=lastProductPage%>"> <input type="hidden"
-				name="theFirstProduct" value="<%=firstProductPage%>">
+			<input type="hidden" name="theLastProduct" value="<%=lastProductPage%>"> 
+			<input type="hidden" name="theFirstProduct" value="<%=firstProductPage%>">
+			<input type="hidden" name="orden" value="<%=orden%>">
 		</form>
 		</div>
 	</header>
@@ -107,7 +111,7 @@
 						<%
 						if (producto.isDestacado()) {
 						%>
-						<p>DESTACADO</p>
+						<p class="destacado">&#9733; DESTACADO &#9733;</p>
 						<%
 						}
 						if (session.getAttribute("login") != null) {
@@ -172,7 +176,7 @@
 						<%
 						if (e.getProducto().isDestacado()) {
 						%>
-							<p>DESTACADO</p>
+							<p class="destacado">&#9733; DESTACADO &#9733;</p>
 						<%
 						}
 						%>

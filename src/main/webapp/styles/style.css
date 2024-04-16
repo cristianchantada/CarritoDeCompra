@@ -38,18 +38,32 @@ nav form {
     justify-content: center;
     align-items: flex-start;
     margin: 30px;
-    
 }
 
 main {
 	height: 80%;
 }
 
-.selects-container {
+.selects-a-input-form-container {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	margin-left: 50px;
+	width: 95vw;
+}
+
+.products-per-page-and-a-order {
+	display: flex;
+	justify-content: space-between;
+	width: 40%;
+	align-items: center;
+}
+
+.order-by-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 15px;
 }
 
 .products-container {
@@ -289,6 +303,37 @@ img {
 	width: 80px;
 }
 
+.destacado {
+    font-weight: bold;
+    color: goldenrod;
+}
+
+.a-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6666;
+    color: white;
+    border: 1px solid #ff6666; 
+    border-radius: 5px;
+    text-decoration: none; 
+    transition: background-color 0.3s ease;
+    cursor: pointer; 
+    margin: 1px 4px;
+    width: 100px;
+    height: 10px;
+}
+
+.a-button:hover {
+    background-color: #ff5050;
+     text-decoration: none;
+}
+
+.a-button:visited {
+	color: white
+}
+.massive-insertion {
+	color: black;
+}
 
 
 

@@ -21,13 +21,27 @@ public class GetNProductsServlet extends HttpServlet {
 		
 		String orden = req.getParameter("orden");
 		req.setAttribute("orden", orden);
+		int productsPerPage = Integer.parseInt(req.getParameter("productsPerPage"));
+		req.setAttribute("productsPerPage", productsPerPage);
+		
+		System.out.println("productsPerPage: " + req.getParameter("productsPerPage"));
+		
 		
 		ProductoDao productoDao = new ProductoDao();
-		List<Producto> listaProductos = productoDao.getNProductsOrderBy(0, 6, orden); 
+		List<Producto> listaProductos = productoDao.getNProductsOrderBy(0, 10 + 1, orden); 
+		
+		if(listaProductos.size() < productsPerPage + 1) {
+			req.setAttribute("isTheLast", true);
+		} else {
+			listaProductos.remove(listaProductos.size() - 1);
+			req.setAttribute("isTheLast", false);
+		}
+		
 		req.setAttribute("listaProductos", listaProductos);
-		req.setAttribute("theLastProduct", 6);
+		req.setAttribute("theLastProduct", 9);
 		req.setAttribute("theFirstProduct", 0);
-		req.getRequestDispatcher("/tienda.jsp").forward(req, resp);
+		req.setAttribute("isTheLast", false);
+		getServletContext().getRequestDispatcher("/tienda.jsp").forward(req, resp);
 	}
 
 	@Override
@@ -83,7 +97,7 @@ public class GetNProductsServlet extends HttpServlet {
 		req.setAttribute("listaProductos", listaProductos);
 		req.setAttribute("productsPerPage", productsPerPage);
 		req.setAttribute("theFirstProduct", firstProductNow);
-		req.getRequestDispatcher("/tienda.jsp").forward(req, resp);
+		getServletContext().getRequestDispatcher("/tienda.jsp").forward(req, resp);
 	}
 
 }

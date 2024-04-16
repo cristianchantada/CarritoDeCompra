@@ -57,20 +57,30 @@ public class ProductoDao implements DaoInterface<Producto> {
 	
 	public List<Producto> getNProductsOrderBy(int init, int cuantity, String orden) {
 		listaProductos = new ArrayList<>();
-		
-		if(orden.equals("id")) {
-			sql = "SELECT * FROM productos ORDER BY ? ASC LIMIT ?, ?";
-		} else if(orden.equals("ASC") || orden.equals("ASC")){
-			sql = "SELECT * FROM productos ORDER BY precio ? LIMIT ?, ?";
+
+		String sql = null;
+		if(orden.equals("id") || orden.equals("ASC") || orden.equals("DESC")){
+			if(orden.equals("id")) {	
+				sql = "SELECT * FROM productos LIMIT ?, ?";
+			}else if(orden.equals("ASC")) {
+				sql = "SELECT * FROM productos ORDER BY precio ASC LIMIT ?, ?";				
+			} else {
+				sql = "SELECT * FROM productos ORDER BY precio DESC LIMIT ?, ?";
+			}
 		} else if(orden.equals("destacado")) {
-			orden = "true";
 			sql = "SELECT * FROM productos WHERE destacado = ? LIMIT ?, ?";
 		}
 		
 		try(PreparedStatement stmt = conn.prepareStatement(sql)){
-			stmt.setString(1, orden);
-			stmt.setInt(1, init);
-			stmt.setInt(2, cuantity);
+			if(orden.equals("id") || orden.equals("ASC") || orden.equals("DESC")){
+				stmt.setInt(1, init);
+				stmt.setInt(2, cuantity);
+			} else if(orden.equals("destacado")){
+				stmt.setBoolean(1, true);
+				stmt.setInt(2, init);
+				stmt.setInt(3, cuantity);
+			}
+			
 			try(ResultSet rs = stmt.executeQuery()){
 				while(rs.next()) {
 					Producto producto = getProducto(rs);
